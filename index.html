@@ -80,6 +80,18 @@
     /* Embed */
     .embed{background:linear-gradient(180deg, rgba(255,255,255,.04), rgba(255,255,255,.01)); padding:14px; border:1px solid rgba(255,255,255,.06); border-radius:var(--radius); box-shadow: var(--shadow)}
     .embed iframe{width:100%; height:70vh; border:0; border-radius:12px; background:#0a0f1f}
+    /* App chrome + gradient frame */
+    .btn.small{padding:8px 12px; font-size:13px; box-shadow:none}
+    .app-chrome{display:flex; align-items:center; justify-content:space-between; padding:10px 12px; border-radius:12px; border:1px solid rgba(255,255,255,.06); background:linear-gradient(180deg, rgba(255,255,255,.04), rgba(255,255,255,.01)); margin:0 0 10px}
+    .app-chrome .left{display:flex; align-items:center; gap:10px}
+    .traffic-dots{display:inline-flex; gap:6px; margin-right:4px}
+    .traffic-dots i{width:8px; height:8px; border-radius:50%; display:inline-block; background:#ef4444}
+    .traffic-dots i:nth-child(2){background:#f59e0b}
+    .traffic-dots i:nth-child(3){background:#22c55e}
+    .status{display:inline-flex; align-items:center; gap:6px; color:var(--muted); font-size:13px}
+    .status .dot{width:8px; height:8px; border-radius:50%; background:#f59e0b; box-shadow:0 0 0 3px rgba(245,158,11,.15)}
+    .frame-wrap{padding:1px; border-radius:12px; background:linear-gradient(90deg, rgba(244,114,182,.35), rgba(96,165,250,.35))}
+    .frame{position:relative; border-radius:11px; overflow:hidden; background:#0a0f1f}
 
     /* Gallery */
     .grid{display:grid; grid-template-columns:repeat(3, 1fr); gap:12px}
@@ -203,11 +215,22 @@
     <!-- EMBED APP -->
     <section id="app" class="embed">
       <div class="muted" style="margin:0 0 10px 6px">Embedded app</div>
-      <!-- ВАЖНО: замените src ниже на ваш постоянный URL из Hugging Face Spaces -->
-      <iframe id="app-frame" src="https://serghejl-pixellift.hf.space" loading="lazy" allow="clipboard-read; clipboard-write; camera; microphone;"></iframe>
-      <div id="app-loader" class="iframe-loader">
-        <div class="spinner"></div>
-        <div class="loader-text">First launch may take 10–60s — the Space is waking up.<br><a href="https://serghejl-pixellift.hf.space" target="_blank" rel="noopener">Open in a new tab</a></div>
+      <div class="app-chrome">
+        <div class="left">
+          <span class="traffic-dots" aria-hidden="true"><i></i><i></i><i></i></span>
+          <strong class="muted" style="letter-spacing:.2px">PixelLift App</strong>
+          <span class="status"><span class="dot"></span><span class="label">Warming up…</span></span>
+        </div>
+        <a class="btn small secondary" href="https://serghejl-pixellift.hf.space" target="_blank" rel="noopener">Open in new tab</a>
+      </div>
+      <div class="frame-wrap">
+        <div class="frame">
+          <iframe id="app-frame" src="https://serghejl-pixellift.hf.space" loading="lazy" allow="clipboard-read; clipboard-write; camera; microphone;"></iframe>
+          <div id="app-loader" class="iframe-loader">
+            <div class="spinner"></div>
+            <div class="loader-text">First launch may take 10–60s — the Space is waking up.<br><a href="https://serghejl-pixellift.hf.space" target="_blank" rel="noopener">Open in a new tab</a></div>
+          </div>
+        </div>
       </div>
     </section>
 
@@ -331,14 +354,20 @@
     (function(){
       const frame = document.getElementById('app-frame');
       const loader = document.getElementById('app-loader');
+      const statusDot = document.querySelector('.status .dot');
+      const statusLabel = document.querySelector('.status .label');
+      if(statusLabel) statusLabel.textContent = 'Warming up…';
       if(!frame || !loader) return;
       frame.addEventListener('load', ()=> {
         loader.style.display = 'none';
+        if(statusDot){ statusDot.style.background = '#22c55e'; statusDot.style.boxShadow = '0 0 0 3px rgba(34,197,94,.18)'; }
+        if(statusLabel) statusLabel.textContent = 'Ready';
       });
       setTimeout(()=>{
         const lt = loader.querySelector('.loader-text');
         if(lt && loader.style.display !== 'none'){
           lt.innerHTML = 'This is taking longer than usual — the Space is waking up...<br><a href="'+frame.src+'" target="_blank" rel="noopener">Open in a new tab</a>';
+          if(statusLabel) statusLabel.textContent = 'Starting…';
         }
       }, 15000);
     })();
@@ -428,3 +457,4 @@
   </script>
 </body>
 </html>
+
