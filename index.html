@@ -221,14 +221,13 @@
           <strong class="muted" style="letter-spacing:.2px">PixelLift App</strong>
           <span class="status"><span class="dot"></span><span class="label">Warming up…</span></span>
         </div>
-        <a class="btn small secondary" href="https://serghejl-pixellift.hf.space" target="_blank" rel="noopener">Open in new tab</a>
       </div>
       <div class="frame-wrap">
         <div class="frame">
           <iframe id="app-frame" src="https://serghejl-pixellift.hf.space" loading="lazy" allow="clipboard-read; clipboard-write; camera; microphone;"></iframe>
           <div id="app-loader" class="iframe-loader">
             <div class="spinner"></div>
-            <div class="loader-text">First launch may take 10–60s — the Space is waking up.<br><a href="https://serghejl-pixellift.hf.space" target="_blank" rel="noopener">Open in a new tab</a></div>
+            <div class="loader-text">First launch may take 10–60s — the Space is waking up.</div>
           </div>
         </div>
       </div>
@@ -366,7 +365,7 @@
       setTimeout(()=>{
         const lt = loader.querySelector('.loader-text');
         if(lt && loader.style.display !== 'none'){
-          lt.innerHTML = 'This is taking longer than usual — the Space is waking up...<br><a href="'+frame.src+'" target="_blank" rel="noopener">Open in a new tab</a>';
+          lt.innerHTML = 'This is taking longer than usual — the Space is waking up...';
           if(statusLabel) statusLabel.textContent = 'Starting…';
         }
       }, 15000);
@@ -457,4 +456,5 @@
   </script>
 </body>
 </html>
+
 
