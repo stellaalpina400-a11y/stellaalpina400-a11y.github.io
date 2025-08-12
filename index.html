@@ -106,6 +106,10 @@
     .spinner{width:32px;height:32px;border-radius:50%; border:3px solid rgba(255,255,255,.2); border-top-color: #a5f3fc; animation:spin 1s linear infinite}
     @keyframes spin{to{transform:rotate(360deg)}}
     .loader-text{color:var(--muted); font-size:14px; text-align:center}
+      html{ scroll-behavior:smooth }
+    section{ scroll-margin-top: 84px }
+    /* Top progress bar */
+    #top-progress{position:fixed; top:0; left:0; height:3px; width:0; background:linear-gradient(90deg, var(--accent), var(--accent-2)); box-shadow:0 2px 8px rgba(0,0,0,.35); z-index:1000; transition:width .25s ease, opacity .3s ease; opacity:1}
   </style>
 </head>
 <body>
@@ -302,6 +306,32 @@
       }, 15000);
     })();
   </script>
+  <script>
+    // Top progress bar on in-page navigation
+    (function(){
+      const bar = document.createElement('div');
+      bar.id = 'top-progress';
+      document.addEventListener('DOMContentLoaded', ()=> document.body.appendChild(bar));
+      let timer = null, prog = 0;
+      function start(){
+        if(!bar.parentNode) document.body.appendChild(bar);
+        bar.style.display='block'; bar.style.opacity='1'; bar.style.width='0%';
+        prog = 0; (function inc(){ prog += Math.random()*15+5; if(prog<90){ bar.style.width = prog+'%'; timer = setTimeout(inc, 180);} })();
+      }
+      function done(){
+        if(timer) clearTimeout(timer);
+        bar.style.width='100%';
+        setTimeout(()=>{ bar.style.opacity='0'; }, 250);
+        setTimeout(()=>{ bar.style.display='none'; bar.style.width='0%'; }, 800);
+      }
+      // Hook all hash links
+      function hook(a){ a.addEventListener('click', (e)=>{ const href=a.getAttribute('href')||''; if(href.startsWith('#')){ start(); setTimeout(done, 900); } }); }
+      document.querySelectorAll('a[href^="#"]').forEach(hook);
+      window.addEventListener('hashchange', ()=> setTimeout(done, 500));
+      // Expose (optional)
+      window.ProgressBarTop = { start, done };
+    })();
+  </script>
   <script src="https://www.paypal.com/sdk/js?client-id=Af35y8NbuqUdx61ImqpHeKHxbfcuieEhpbp-P45jEYuPEKEO0Fk3Y3POyO-nXvLO6-edioFPpKL9qTtb&currency=EUR"></script>
   <script>
     // Modal helpers for PayPal thank-you
@@ -361,6 +391,7 @@
   </script>
 </body>
 </html>
+
 
 
 
