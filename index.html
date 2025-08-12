@@ -76,6 +76,13 @@
 
     footer{margin:38px 0 40px; color:var(--muted)}
     .muted{color:var(--muted)}
+      /* Modal */
+    .modal-backdrop{position:fixed; inset:0; background:rgba(0,0,0,.55); display:flex; align-items:center; justify-content:center; padding:16px; z-index:1000}
+    .modal-card{background:linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.02)); border:1px solid rgba(255,255,255,.12); border-radius:var(--radius); width:min(520px, 94vw); box-shadow:var(--shadow); overflow:hidden}
+    .modal-head{padding:16px 18px; font-weight:800; letter-spacing:.2px; background:rgba(129,140,248,.12); border-bottom:1px solid rgba(255,255,255,.08)}
+    .modal-body{padding:16px 18px; color:var(--text)}
+    .modal-actions{display:flex; gap:10px; padding:16px 18px; border-top:1px solid rgba(255,255,255,.08); justify-content:flex-end}
+    .modal-close{position:absolute; top:8px; right:12px; cursor:pointer; color:var(--muted);}
   </style>
 </head>
 <body>
@@ -219,7 +226,26 @@
         <div class="muted">support@yourdomain.com · Политика · Условия</div>
       </div>
     </footer>
-  </main>
+
+  <!-- Payment Thank-You Modal -->
+  <div id="pay-modal" class="modal-backdrop" style="display:none">
+    <div class="modal-card" role="dialog" aria-modal="true" aria-labelledby="pm-title">
+      <div class="modal-head">
+        <span id="pm-title">Спасибо за оплату 🎉</span>
+      </div>
+      <div class="modal-body">
+        <div style="margin-bottom:6px"><strong id="pm-name">Пользователь</strong>, ваша оплата <strong id="pm-tier">Pro</strong> прошла успешно.</div>
+        <div class="muted">Сумма: <span id="pm-amount">—</span></div>
+        <div class="muted">Номер заказа: <code id="pm-order">—</code></div>
+      </div>
+      <div class="modal-actions">
+        <a href="#app" class="btn" id="pm-goto">Вернуться к апскейлеру</a>
+        <button class="btn secondary" id="pm-close" type="button">Закрыть</button>
+      </div>
+    </div>
+  </div>
+
+</main>
 
   <script>
     // Before/After slider logic
@@ -234,6 +260,29 @@
   </script>
   <script src="https://www.paypal.com/sdk/js?client-id=Af35y8NbuqUdx61ImqpHeKHxbfcuieEhpbp-P45jEYuPEKEO0Fk3Y3POyO-nXvLO6-edioFPpKL9qTtb&currency=EUR"></script>
   <script>
+    // Modal helpers for PayPal thank-you
+    (function(){
+      const modal = document.getElementById('pay-modal');
+      const byId = (id)=> document.getElementById(id);
+      function showThankYou(details, tier, amountText){
+        const name = (details?.payer?.name?.given_name) || (details?.payer?.name?.surname) || 'пользователь';
+        const orderId = details?.id || details?.purchase_units?.[0]?.payments?.captures?.[0]?.id || '—';
+        byId('pm-name').textContent = name;
+        byId('pm-tier').textContent = tier;
+        byId('pm-amount').textContent = amountText || '—';
+        byId('pm-order').textContent = orderId;
+        modal.style.display = 'flex';
+        setTimeout(()=>{ byId('pm-goto').focus(); }, 50);
+      }
+      function closePayModal(){ modal.style.display = 'none'; }
+      modal.addEventListener('click', (e)=> { if(e.target === modal) closePayModal(); });
+      document.getElementById('pm-close')?.addEventListener('click', closePayModal);
+      document.addEventListener('keydown', (e)=> { if(e.key === 'Escape') closePayModal(); });
+      window.showThankYou = showThankYou;
+      window.closePayModal = closePayModal;
+    })();
+  </script>
+  <script>
     paypal.Buttons({
       style: { layout: 'vertical', shape: 'rect' },
       createOrder: function(data, actions){
@@ -243,7 +292,9 @@
       },
       onApprove: function(data, actions){
         return actions.order.capture().then(function(details){
-          alert('Спасибо, ' + (details.payer?.name?.given_name || 'пользователь') + '! Оплата за Pro прошла.');
+          const amt = (details?.purchase_units?.[0]?.payments?.captures?.[0]?.amount) || (details?.purchase_units?.[0]?.amount);
+          const amtText = amt ? (amt.value + ' ' + (amt.currency_code || 'EUR')) : '€9.00 EUR';
+          showThankYou(details, 'Pro', amtText);
         });
       }
     }).render('#paypal-button-container-pro');
@@ -257,12 +308,15 @@
       },
       onApprove: function(data, actions){
         return actions.order.capture().then(function(details){
-          alert('Спасибо, ' + (details.payer?.name?.given_name || 'пользователь') + '! Оплата за Studio прошла.');
+          const amt = (details?.purchase_units?.[0]?.payments?.captures?.[0]?.amount) || (details?.purchase_units?.[0]?.amount);
+          const amtText = amt ? (amt.value + ' ' + (amt.currency_code || 'EUR')) : '€29.00 EUR';
+          showThankYou(details, 'Studio', amtText);
         });
       }
     }).render('#paypal-button-container-studio');
   </script>
 </body>
 </html>
+
 
 
