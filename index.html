@@ -43,8 +43,12 @@
     .btn.secondary{background:#111827; color:var(--text); border:1px solid #1f2937; box-shadow:none}
     header{position:sticky; top:0; backdrop-filter: blur(12px); background:rgba(10,16,35,.55); border-bottom:1px solid rgba(255,255,255,.06); z-index:50}
     header .inner{display:flex; align-items:center; justify-content:space-between; padding:14px 0}
-    .logo{display:flex; align-items:center; gap:.6rem; font-weight:800; letter-spacing:.3px}
-    .logo-dot{width:10px;height:10px;border-radius:50%; background:linear-gradient(90deg, var(--accent), var(--accent-2))}
+    .logo{display:flex; align-items:center; gap:.7rem; font-weight:900; letter-spacing:.3px}
+    .logo-mark{width:28px; height:28px; border-radius:9px; box-shadow: var(--shadow)}
+    .logo-type{display:flex; align-items:center; gap:.12rem; font-size:18px}
+    .logo-type .lift, .logo-type .pix{position:relative; background:linear-gradient(90deg, var(--accent), var(--accent-2)); -webkit-background-clip:text; background-clip:text; color:transparent}
+    .lift-arrows{display:inline-flex; margin:0 .16rem; opacity:.95}
+    .lift-arrows svg{display:block}
     .chip{font-size:12px; padding:6px 10px; border-radius:999px; background:rgba(129,140,248,.15); color:#c7d2fe; border:1px solid rgba(129,140,248,.3)}
 
     /* Hero */
@@ -115,7 +119,40 @@
 <body>
   <header>
     <div class="container inner">
-      <div class="logo"><span class="logo-dot"></span> <span>PixelLift</span></div>
+      <div class="logo" aria-label="PixelLift">
+        <!-- Brand mark: gradient tile with arrow up-right (consistent with favicon) -->
+        <svg class="logo-mark" viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <defs>
+            <linearGradient id="gmark" x1="0" x2="1" y1="1" y2="0">
+              <stop stop-color="#f472b6"/>
+              <stop offset="1" stop-color="#60a5fa"/>
+            </linearGradient>
+          </defs>
+          <rect rx="14" ry="14" width="64" height="64" fill="url(#gmark)"/>
+          <path d="M22 42 L42 22" stroke="#0b1226" stroke-width="6" stroke-linecap="round"/>
+          <path d="M30 22 H42 V34" stroke="#0b1226" stroke-width="6" stroke-linecap="round" fill="none"/>
+        </svg>
+        <!-- Wordmark with lift motif: Pixel [arrows] Lift -->
+        <span class="logo-type"><span class="pix">Pixel</span>
+          <span class="lift-arrows" aria-hidden="true">
+            <svg width="12" height="18" viewBox="0 0 14 18" xmlns="http://www.w3.org/2000/svg">
+              <defs>
+                <linearGradient id="gar" x1="0" x2="1" y1="1" y2="0">
+                  <stop stop-color="#f472b6"/>
+                  <stop offset="1" stop-color="#60a5fa"/>
+                </linearGradient>
+              </defs>
+              <!-- Up arrow -->
+              <path d="M7 2 L10.5 5.5 M7 2 L3.5 5.5" stroke="url(#gar)" stroke-width="2" stroke-linecap="round" fill="none"/>
+              <!-- Down arrow -->
+              <path d="M7 16 L10.5 12.5 M7 16 L3.5 12.5" stroke="url(#gar)" stroke-width="2" stroke-linecap="round" fill="none"/>
+              <!-- Center rail -->
+              <path d="M7 3 L7 15" stroke="#94a3b8" stroke-width="1.6" stroke-linecap="round" opacity=".6"/>
+            </svg>
+          </span>
+          <span class="lift">Lift</span>
+        </span>
+      </div>
       <nav style="display:flex; gap:14px; align-items:center">
         <a href="#how">Как это работает</a>
         <a href="#pricing">Тарифы</a>
@@ -391,6 +428,7 @@
   </script>
 </body>
 </html>
+
 
 
 
