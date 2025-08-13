@@ -318,7 +318,7 @@
       <div style="height:20px"></div>
       <div style="display:flex; justify-content:space-between; gap:12px; flex-wrap:wrap">
         <div>© <span id="year"></span> Pixweave</div>
-        <div class="muted">support@yourdomain.com · Privacy · Terms</div>
+        <div class="muted"><a href="mailto:support@yourdomain.com">support@yourdomain.com<\/a> · <a href="#" id="link-privacy">Privacy<\/a> · <a href="#" id="link-terms">Terms<\/a><\/div>
       </div>
     </footer>
 
@@ -340,7 +340,80 @@
     </div>
   </div>
 
-</main>
+  
+  <!-- Privacy Policy Modal -->
+  <div id="privacy-modal" class="modal-backdrop" style="display:none">
+    <div class="modal-card" role="dialog" aria-modal="true" aria-labelledby="privacy-title">
+      <div class="modal-head"><span id="privacy-title">Privacy Policy<\/span><\/div>
+      <div class="modal-body" style="max-height:60vh; overflow:auto">
+        <p><strong>Effective date:<\/strong> 13 August 2025<\/p>
+        <p>This Privacy Policy explains how <strong>Pixweave<\/strong> ("we", "us") collects and uses your information when you use our website and the embedded upscaler app. If you have questions, contact us at <a href="mailto:support@yourdomain.com">support@yourdomain.com<\/a>.<\/p>
+        <h4>What we collect<\/h4>
+        <ul>
+          <li><strong>Payments via PayPal.<\/strong> We receive limited billing details from PayPal (e.g., payer name, email, country, transaction ID). We do <em>not<\/em> receive or store card numbers. See PayPal's privacy policy for details.<\/li>
+          <li><strong>Usage limits.<\/strong> We store counters for plan limits (e.g., free daily quota) <em>locally on your device<\/em> using <code>localStorage<\/code>. These counters are not sent to our servers.<\/li>
+          <li><strong>Images you upload.<\/strong> Processing happens inside our embedded app hosted on <strong>Hugging Face Spaces<\/strong>. Images are held in memory\/temporary files only for processing and download, then discarded. We don't use your images to train models or for marketing.<\/li>
+          <li><strong>Logs and hosting data.<\/strong> Our static site is on <strong>GitHub Pages<\/strong> and the app runs on <strong>Hugging Face Spaces<\/strong>. These providers may log IP addresses and device info for security and abuse prevention; see their policies.<\/li>
+        <\/ul>
+        <h4>Cookies & local storage<\/h4>
+        <p>We use local storage to remember your selected plan after payment and to enforce per-plan quotas. You can clear it in your browser settings (which may reset your counters and show the Free plan).<\/p>
+        <h4>Legal bases (EEA\/UK)<\/h4>
+        <ul>
+          <li><em>Contract performance<\/em> (providing the service and processing your order),<\/li>
+          <li><em>Legitimate interests<\/em> (fraud prevention, service improvement),<\/li>
+          <li><em>Consent<\/em> where required (e.g., optional communications).<\/li>
+        <\/ul>
+        <h4>Sharing with processors<\/h4>
+        <ul>
+          <li><strong>PayPal<\/strong> — payments and invoicing.<\/li>
+          <li><strong>Hugging Face, Inc.<\/strong> — app hosting and inference.<\/li>
+          <li><strong>GitHub, Inc.<\/strong> — static site hosting (GitHub Pages).<\/li>
+        <\/ul>
+        <h4>Retention<\/h4>
+        <p>Transaction records are kept as required by tax\/accounting laws. Technical logs are retained by our providers per their policies. We do not otherwise retain your images after processing completes.<\/p>
+        <h4>Your rights<\/h4>
+        <p>Where applicable, you may request access, correction, deletion, or portability of your personal data, and object to or restrict processing. Contact <a href="mailto:support@yourdomain.com">support@yourdomain.com<\/a>. You may also have the right to complain to your local data protection authority.<\/p>
+        <h4>International transfers<\/h4>
+        <p>Your data may be processed in countries outside your own. We rely on our providers' transfer safeguards (e.g., Standard Contractual Clauses) where required.<\/p>
+        <h4>Children<\/h4>
+        <p>Pixweave is not directed to children under 13 (or 16 in some regions). Do not use the service if you do not meet the minimum age requirements.<\/p>
+        <h4>Changes<\/h4>
+        <p>We may update this policy. The updated version will apply from its effective date and be posted here.<\/p>
+      <\/div>
+      <div class="modal-actions"><button class="btn secondary" type="button" data-close-modal>Close<\/button><\/div>
+    <\/div>
+  <\/div>
+
+  <!-- Terms of Service Modal -->
+  <div id="terms-modal" class="modal-backdrop" style="display:none">
+    <div class="modal-card" role="dialog" aria-modal="true" aria-labelledby="terms-title">
+      <div class="modal-head"><span id="terms-title">Terms of Service<\/span><\/div>
+      <div class="modal-body" style="max-height:60vh; overflow:auto">
+        <p><strong>Last updated:<\/strong> 13 August 2025<\/p>
+        <h4>1. Service<\/h4>
+        <p>Pixweave lets you upscale images (2× or 4×) via a web interface. Free plan results include a watermark and daily limits. Paid plans (Pro, Studio) remove the watermark and increase limits.<\/p>
+        <h4>2. Payments & subscriptions<\/h4>
+        <p>Payments are processed by PayPal. We do not store card details. You can manage or cancel recurring payments in your PayPal account. Access continues until the end of the paid period, after which your plan reverts to Free.<\/p>
+        <h4>3. Refunds<\/h4>
+        <p>If you experience a technical issue, contact <a href="mailto:support@yourdomain.com">support@yourdomain.com<\/a> within 7 days of purchase. Refunds are assessed case‑by‑case at our discretion, taking into account usage and troubleshooting steps.<\/p>
+        <h4>4. Fair use & limits<\/h4>
+        <p>You agree not to bypass plan limits or remove watermarks on the Free plan. We may adjust limits or pricing with reasonable notice on the site.<\/p>
+        <h4>5. Acceptable use<\/h4>
+        <p>Do not upload unlawful content or material that infringes others' rights, contains exploitation or extreme violence, or violates applicable laws. We may suspend access for abuse or security reasons.<\/p>
+        <h4>6. Ownership<\/h4>
+        <p>You retain all rights to your images. You grant us a limited license to process your images for the purpose of providing the service to you. We do not claim ownership over your outputs.<\/p>
+        <h4>7. Availability & changes<\/h4>
+        <p>The service is provided “as is” without warranties. We may change or discontinue features at any time. We are not liable for loss of data, profits, or other consequential damages; our total liability is limited to the amounts you paid in the 3 months preceding the claim, to the extent permitted by law.<\/p>
+        <h4>8. Governing law<\/h4>
+        <p>These Terms are governed by the laws of the Republic of Serbia, without regard to conflict‑of‑laws rules, and the courts of Belgrade have exclusive jurisdiction, unless mandatory law provides otherwise.<\/p>
+        <h4>9. Contact<\/h4>
+        <p>Questions? <a href="mailto:support@yourdomain.com">support@yourdomain.com<\/a><\/p>
+      <\/div>
+      <div class="modal-actions"><button class="btn secondary" type="button" data-close-modal>Close<\/button><\/div>
+    <\/div>
+  <\/div>
+
+<\/main>
 
   <script>
     // Before/After slider logic (draggable + keyboard)
@@ -461,6 +534,24 @@
     })();
 
     window.__pixweaveSetTier = setTier; // expose for PayPal callbacks
+  })();
+  </script>
+  <script>
+  // Privacy & Terms modal logic
+  (function(){
+    const linkPrivacy = document.getElementById('link-privacy');
+    const linkTerms = document.getElementById('link-terms');
+    const pm = document.getElementById('privacy-modal');
+    const tm = document.getElementById('terms-modal');
+    function openM(m){ if(m) { m.style.display='flex'; setTimeout(()=>{ m.querySelector('.modal-card')?.focus(); }, 30); } }
+    function closeM(m){ if(m) m.style.display='none'; }
+    linkPrivacy && linkPrivacy.addEventListener('click', function(e){ e.preventDefault(); openM(pm); });
+    linkTerms && linkTerms.addEventListener('click', function(e){ e.preventDefault(); openM(tm); });
+    document.querySelectorAll('[data-close-modal]').forEach(btn=>{
+      btn.addEventListener('click', ()=> closeM(btn.closest('.modal-backdrop')));
+    });
+    [pm, tm].forEach(m=>{ m && m.addEventListener('click', (e)=>{ if(e.target===m) closeM(m); }); });
+    document.addEventListener('keydown', (e)=>{ if(e.key==='Escape'){ closeM(pm); closeM(tm); }});
   })();
   </script>
   <script src="https://www.paypal.com/sdk/js?client-id=Af35y8NbuqUdx61ImqpHeKHxbfcuieEhpbp-P45jEYuPEKEO0Fk3Y3POyO-nXvLO6-edioFPpKL9qTtb&currency=EUR&locale=en_US"></script>
