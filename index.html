@@ -124,7 +124,7 @@
     .modal-close{position:absolute; top:8px; right:12px; cursor:pointer; color:var(--muted);}
       /* Iframe loader */
     .embed { position: relative; }
-    .iframe-loader{position:absolute; inset:14px; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:10px; background:linear-gradient(180deg, rgba(10,15,31,.85), rgba(10,15,31,.75)); border-radius:12px; border:1px dashed rgba(255,255,255,.15)}
+    .iframe-loader{position:absolute; inset:14px; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:10px; background:linear-gradient(180deg, rgba(10,15,31,.85), rgba(10,15,31,.75)); border-radius:12px; border:1px dashed rgba(255,255,255,.15); pointer-events:none}
     .spinner{width:32px;height:32px;border-radius:50%; border:3px solid rgba(255,255,255,.2); border-top-color: #a5f3fc; animation:spin 1s linear infinite}
     @keyframes spin{to{transform:rotate(360deg)}}
     .loader-text{color:var(--muted); font-size:14px; text-align:center}
@@ -229,7 +229,7 @@
       </div>
       <div class="frame-wrap">
         <div class="frame">
-          <iframe id="app-frame" src="https://serghejl-pixellift.hf.space/?v=3" loading="lazy" allow="clipboard-read; clipboard-write; camera; microphone;"></iframe>
+          <iframe id="app-frame" src="https://serghejl-pixellift.hf.space/?v=5" loading="lazy" allow="clipboard-read; clipboard-write; camera; microphone;"></iframe>
           <div id="app-loader" class="iframe-loader">
             <div class="spinner"></div>
             <div class="loader-text">First launch may take 10–60s — the Space is waking up.</div>
@@ -373,7 +373,7 @@
     document.getElementById('year').textContent = new Date().getFullYear();
   </script>
   <script>
-    // Iframe loader control
+    // Iframe loader control (with hard fallback + click-through overlay)
     (function(){
       const frame = document.getElementById('app-frame');
       const loader = document.getElementById('app-loader');
@@ -381,11 +381,16 @@
       const statusLabel = document.querySelector('.status .label');
       if(statusLabel) statusLabel.textContent = 'Warming up…';
       if(!frame || !loader) return;
-      frame.addEventListener('load', ()=> {
+
+      function markReady(){
         loader.style.display = 'none';
         if(statusDot){ statusDot.style.background = '#22c55e'; statusDot.style.boxShadow = '0 0 0 3px rgba(34,197,94,.18)'; }
         if(statusLabel) statusLabel.textContent = 'Ready';
-      });
+      }
+
+      frame.addEventListener('load', markReady, { once: true });
+
+      // Soft hint after 15s
       setTimeout(()=>{
         const lt = loader.querySelector('.loader-text');
         if(lt && loader.style.display !== 'none'){
@@ -393,6 +398,11 @@
           if(statusLabel) statusLabel.textContent = 'Starting…';
         }
       }, 15000);
+
+      // Hard fallback: hide overlay after 45s even if load didn\'t fire (overlay is pointer-events:none anyway)
+      setTimeout(()=>{
+        if(loader && loader.style.display !== 'none') markReady();
+      }, 45000);
     })();
   </script>
   <script>
@@ -480,6 +490,7 @@
   </script>
 </body>
 </html>
+
 
 
 
