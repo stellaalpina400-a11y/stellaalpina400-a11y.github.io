@@ -117,14 +117,31 @@
 
     footer{margin:38px 0 40px; color:var(--muted)}
     .muted{color:var(--muted)}
-      /* Modal */
-    .modal-backdrop{position:fixed; inset:0; background:rgba(0,0,0,.55); display:flex; align-items:center; justify-content:center; padding:16px; z-index:1000}
-    .modal-card{background:linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.02)); border:1px solid rgba(255,255,255,.12); border-radius:var(--radius); width:min(520px, 94vw); box-shadow:var(--shadow); overflow:hidden}
-    .modal-head{padding:16px 18px; font-weight:800; letter-spacing:.2px; background:rgba(129,140,248,.12); border-bottom:1px solid rgba(255,255,255,.08)}
-    .modal-body{padding:16px 18px; color:var(--text)}
-    .modal-actions{display:flex; gap:10px; padding:16px 18px; border-top:1px solid rgba(255,255,255,.08); justify-content:flex-end}
-    .modal-close{position:absolute; top:8px; right:12px; cursor:pointer; color:var(--muted);}
-      /* Iframe loader */
+     /* Modal (improved contrast & stability) */
+.modal-backdrop{
+  position:fixed; inset:0; background:rgba(0,0,0,.75);
+  display:none; align-items:center; justify-content:center; padding:16px; z-index:1000;
+}
+.modal-card{
+  background:#0b1226; border:1px solid rgba(255,255,255,.16);
+  border-radius:var(--radius); width:min(720px, 96vw); max-height:84vh;
+  box-shadow:var(--shadow); overflow:hidden; color:var(--text);
+}
+.modal-head{
+  padding:16px 18px; font-weight:800; letter-spacing:.2px;
+  background:rgba(129,140,248,.18); border-bottom:1px solid rgba(255,255,255,.12);
+}
+.modal-body{
+  padding:16px 18px; overflow:auto; line-height:1.55;
+}
+.modal-body h4{ margin:16px 0 8px; font-size:16px; }
+.modal-body a{ color:#93c5fd; text-decoration:underline; }
+.modal-body p, .modal-body li{ color:var(--text); }
+.modal-actions{
+  display:flex; gap:10px; padding:14px 18px; justify-content:flex-end;
+  border-top:1px solid rgba(255,255,255,.12); background:rgba(255,255,255,.03);
+}
+/* Iframe loader */ 
     .embed { position: relative; }
     .iframe-loader{position:absolute; inset:14px; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:10px; background:linear-gradient(180deg, rgba(10,15,31,.85), rgba(10,15,31,.75)); border-radius:12px; border:1px dashed rgba(255,255,255,.15); pointer-events:none}
     .spinner{width:32px;height:32px;border-radius:50%; border:3px solid rgba(255,255,255,.2); border-top-color: #a5f3fc; animation:spin 1s linear infinite}
