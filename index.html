@@ -61,10 +61,10 @@
 
     /* Before/After */
     .ba-card{background:linear-gradient(180deg, rgba(255,255,255,.04), rgba(255,255,255,.01)); padding:16px; border:1px solid rgba(255,255,255,.06); border-radius:var(--radius); box-shadow: var(--shadow)}
-    .ba-wrap{position:relative; overflow:hidden; border-radius:12px; background:#0a0f1f; aspect-ratio:16/9; max-height:360px}
-    .ba-wrap img{display:block; width:100%; height:100%; object-fit:cover; user-select:none; -webkit-user-drag:none}
+    .ba-wrap{position:relative; overflow:hidden; border-radius:12px; background:#0a0f1f; height:clamp(220px,30vw,320px)}
+    .ba-wrap img{display:block; width:100%; height:100%; object-fit:contain; background:#0a0f1f; user-select:none; -webkit-user-drag:none}
     .ba-top{position:absolute; inset:0; overflow:hidden}
-    .ba-top img{position:absolute; inset:0; width:100%; height:100%; object-fit:cover}
+    .ba-top img{position:absolute; inset:0; width:100%; height:100%; object-fit:contain; background:#0a0f1f}
     .ba-slider{position:absolute; left:0; right:0; bottom:10px; display:flex; justify-content:center}
     .ba-input{width:100%; appearance:none; height:4px; background:#111827; border-radius:999px; outline:none}
     .ba-input::-webkit-slider-thumb{appearance:none; width:18px; height:18px; border-radius:50%; background:linear-gradient(90deg,var(--accent),var(--accent-2)); border:none; box-shadow:0 0 0 4px rgba(34,211,238,.25)}
@@ -75,7 +75,7 @@
     .ba-label.left{ left:10px }
     .ba-label.right{ right:10px }
 
-    @media (max-width:900px){ .ba-wrap{ max-height:260px } }
+    @media (max-width:900px){ .ba-wrap{ height:clamp(180px,44vw,260px) } }
 
     /* Cards */
     .cards{display:grid; grid-template-columns:repeat(4,1fr); gap:12px}
