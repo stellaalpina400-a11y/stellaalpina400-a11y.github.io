@@ -100,12 +100,12 @@
     .tile{overflow:hidden; border-radius:12px; border:1px solid rgba(255,255,255,.08)}
 
     /* Pricing */
-    .pricing{display:grid; grid-template-columns:repeat(3,1fr); gap:14px}
+    .pricing{display:grid; grid-template-columns:repeat(3,1fr); gap:14px; align-items:stretch}
     @media (max-width:900px){ .pricing{grid-template-columns:1fr;} }
-    .price-card{position:relative; background:linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.02)); border:1px solid rgba(255,255,255,.09); border-radius:var(--radius); padding:22px}
+    .price-card{position:relative; background:linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.02)); border:1px solid rgba(255,255,255,.09); border-radius:var(--radius); padding:22px; display:flex; flex-direction:column}
     .price-card h3{margin:4px 0 8px}
     .price{font-size:32px; font-weight:800; letter-spacing:.2px}
-    .features{margin:10px 0 16px; color:var(--muted)}
+    .features{margin:10px 0 16px; color:var(--muted); flex:1}
 
     footer{margin:38px 0 40px; color:var(--muted)}
     .muted{color:var(--muted)}
@@ -126,6 +126,8 @@
     section{ scroll-margin-top: 84px }
     /* Top progress bar */
     #top-progress{position:fixed; top:0; left:0; height:3px; width:0; background:linear-gradient(90deg, var(--accent), var(--accent-2)); box-shadow:0 2px 8px rgba(0,0,0,.35); z-index:1000; transition:width .25s ease, opacity .3s ease; opacity:1}
+    /* Ensure pricing buttons stick to the bottom and span full width */
+  .price-card .btn{margin-top:auto; width:100%; justify-content:center; display:flex}
   </style>
 </head>
 <body>
@@ -456,6 +458,7 @@
   </script>
 </body>
 </html>
+
 
 
 
