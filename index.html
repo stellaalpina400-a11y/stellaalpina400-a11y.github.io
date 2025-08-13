@@ -125,14 +125,18 @@
 .modal-card{
   background:#0b1226; border:1px solid rgba(255,255,255,.16);
   border-radius:var(--radius); width:min(720px, 96vw); max-height:84vh;
-  box-shadow:var(--shadow); overflow:hidden; color:var(--text);
+  box-shadow:var(--shadow); color:var(--text);
+  display:flex; flex-direction:column; /* allow inner body to flex/scroll */
+  overflow:hidden;
 }
 .modal-head{
   padding:16px 18px; font-weight:800; letter-spacing:.2px;
   background:rgba(129,140,248,.18); border-bottom:1px solid rgba(255,255,255,.12);
 }
 .modal-body{
-  padding:16px 18px; overflow:auto; line-height:1.55;
+  padding:16px 18px; line-height:1.55;
+  overflow:auto; flex:1; min-height:0; /* enable scroll inside flex parent */
+  -webkit-overflow-scrolling: touch;
 }
 .modal-body h4{ margin:16px 0 8px; font-size:16px; }
 .modal-body a{ color:#93c5fd; text-decoration:underline; }
@@ -335,13 +339,12 @@
       <div style="height:20px"></div>
       <div style="display:flex; justify-content:space-between; gap:12px; flex-wrap:wrap">
         <div>© <span id="year"></span> Pixweave</div>
-     <div class="muted">
-  <a href="mailto:support@yourdomain.com">support@yourdomain.com</a>
-  · <a href="#" id="link-privacy" data-no-progress="true">Privacy</a>
-  · <a href="#" id="link-terms" data-no-progress="true">Terms</a>
-</div>
- 
-      
+        <div class="muted">
+          <a href="mailto:support@yourdomain.com">support@yourdomain.com</a>
+          · <a href="#" id="link-privacy" data-no-progress="true">Privacy</a>
+          · <a href="#" id="link-terms" data-no-progress="true">Terms</a>
+        </div>
+      </div>
     </footer>
 
   <!-- Payment Thank-You Modal -->
@@ -434,7 +437,7 @@
   </div>
 </div>
   
-<\/main>
+</main>
 
   <script>
     // Before/After slider logic (draggable + keyboard)
@@ -636,6 +639,7 @@
   </script>
 </body>
 </html>
+
 
 
 
