@@ -229,7 +229,7 @@
       </div>
       <div class="frame-wrap">
         <div class="frame">
-          <iframe id="app-frame" src="https://serghejl-pixellift.hf.space/?v=8" loading="lazy" allow="clipboard-read; clipboard-write; camera; microphone;"></iframe>
+          <iframe id="app-frame" src="https://serghejl-pixellift.hf.space/?v=11" loading="lazy" allow="clipboard-read; clipboard-write; camera; microphone;"></iframe>
           <div id="app-loader" class="iframe-loader">
             <div class="spinner"></div>
             <div class="loader-text">First launch may take 10–60s — the Space is waking up.</div>
@@ -308,7 +308,7 @@
       <div style="display:flex; flex-wrap:wrap; align-items:center; gap:14px; justify-content:space-between">
         <div>
           <h3 style="margin:0 0 4px">Ready to try?</h3>
-          <div class="muted">Upload an image and get the result in ~20 seconds.</div>
+          <div class="muted">Upload an image and get the result in ~10 seconds.</div>
         </div>
         <a href="#app" class="btn">Open the upscaler</a>
       </div>
@@ -431,6 +431,38 @@
       window.ProgressBarTop = { start, done };
     })();
   </script>
+  <script>
+  // Tier switcher patch: remembers paid tier and swaps iframe to Pro/Studio Space
+  (function(){
+    const PRO_URL = "https://serghejl-pixellift.hf.space/?v=11";      // TODO: replace with your Pro Space URL
+    const STUDIO_URL = "https://serghejl-pixellift.hf.space/?v=11";   // TODO: replace with your Studio Space URL
+    const frame = document.getElementById('app-frame');
+
+    function setTier(tier){
+      try{
+        const until = Date.now() + 30*24*60*60*1000; // naive 30-day window
+        localStorage.setItem('pixweave_tier', tier);
+        localStorage.setItem('pixweave_tier_until', String(until));
+        if(frame){ frame.src = (tier === 'pro') ? PRO_URL : STUDIO_URL; }
+      }catch(e){ /* ignore */ }
+    }
+
+    (function applySavedTier(){
+      try{
+        const t = localStorage.getItem('pixweave_tier');
+        const u = Number(localStorage.getItem('pixweave_tier_until')||0);
+        if(t && u && Date.now() < u){
+          if(frame){ frame.src = (t === 'pro') ? PRO_URL : STUDIO_URL; }
+        }else{
+          localStorage.removeItem('pixweave_tier');
+          localStorage.removeItem('pixweave_tier_until');
+        }
+      }catch(e){ /* ignore */ }
+    })();
+
+    window.__pixweaveSetTier = setTier; // expose for PayPal callbacks
+  })();
+  </script>
   <script src="https://www.paypal.com/sdk/js?client-id=Af35y8NbuqUdx61ImqpHeKHxbfcuieEhpbp-P45jEYuPEKEO0Fk3Y3POyO-nXvLO6-edioFPpKL9qTtb&currency=EUR&locale=en_US"></script>
   <script>
     // Modal helpers for PayPal thank-you
@@ -468,6 +500,7 @@
           const amt = (details?.purchase_units?.[0]?.payments?.captures?.[0]?.amount) || (details?.purchase_units?.[0]?.amount);
           const amtText = amt ? (amt.value + ' ' + (amt.currency_code || 'EUR')) : '€9.00 EUR';
           showThankYou(details, 'Pro', amtText);
+          window.__pixweaveSetTier && window.__pixweaveSetTier('pro');
         });
       }
     }).render('#paypal-button-container-pro');
@@ -484,12 +517,14 @@
           const amt = (details?.purchase_units?.[0]?.payments?.captures?.[0]?.amount) || (details?.purchase_units?.[0]?.amount);
           const amtText = amt ? (amt.value + ' ' + (amt.currency_code || 'EUR')) : '€29.00 EUR';
           showThankYou(details, 'Studio', amtText);
+          window.__pixweaveSetTier && window.__pixweaveSetTier('studio');
         });
       }
     }).render('#paypal-button-container-studio');
   </script>
 </body>
 </html>
+
 
 
 
