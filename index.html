@@ -363,48 +363,47 @@
   </div>
 
   
-  <!-- Privacy Policy Modal -->
-  <div id="privacy-modal" class="modal-backdrop" style="display:none">
-    <div class="modal-card" role="dialog" aria-modal="true" aria-labelledby="privacy-title">
-      <div class="modal-head"><span id="privacy-title">Privacy Policy<\/span><\/div>
-      <div class="modal-body" style="max-height:60vh; overflow:auto">
-        <p><strong>Effective date:<\/strong> 13 August 2025<\/p>
-        <p>This Privacy Policy explains how <strong>Pixweave<\/strong> ("we", "us") collects and uses your information when you use our website and the embedded upscaler app. If you have questions, contact us at <a href="mailto:support@yourdomain.com">support@yourdomain.com<\/a>.<\/p>
-        <h4>What we collect<\/h4>
-        <ul>
-          <li><strong>Payments via PayPal.<\/strong> We receive limited billing details from PayPal (e.g., payer name, email, country, transaction ID). We do <em>not<\/em> receive or store card numbers. See PayPal's privacy policy for details.<\/li>
-          <li><strong>Usage limits.<\/strong> We store counters for plan limits (e.g., free daily quota) <em>locally on your device<\/em> using <code>localStorage<\/code>. These counters are not sent to our servers.<\/li>
-          <li><strong>Images you upload.<\/strong> Processing happens inside our embedded app hosted on <strong>Hugging Face Spaces<\/strong>. Images are held in memory\/temporary files only for processing and download, then discarded. We don't use your images to train models or for marketing.<\/li>
-          <li><strong>Logs and hosting data.<\/strong> Our static site is on <strong>GitHub Pages<\/strong> and the app runs on <strong>Hugging Face Spaces<\/strong>. These providers may log IP addresses and device info for security and abuse prevention; see their policies.<\/li>
-        <\/ul>
-        <h4>Cookies & local storage<\/h4>
-        <p>We use local storage to remember your selected plan after payment and to enforce per-plan quotas. You can clear it in your browser settings (which may reset your counters and show the Free plan).<\/p>
-        <h4>Legal bases (EEA\/UK)<\/h4>
-        <ul>
-          <li><em>Contract performance<\/em> (providing the service and processing your order),<\/li>
-          <li><em>Legitimate interests<\/em> (fraud prevention, service improvement),<\/li>
-          <li><em>Consent<\/em> where required (e.g., optional communications).<\/li>
-        <\/ul>
-        <h4>Sharing with processors<\/h4>
-        <ul>
-          <li><strong>PayPal<\/strong> — payments and invoicing.<\/li>
-          <li><strong>Hugging Face, Inc.<\/strong> — app hosting and inference.<\/li>
-          <li><strong>GitHub, Inc.<\/strong> — static site hosting (GitHub Pages).<\/li>
-        <\/ul>
-        <h4>Retention<\/h4>
-        <p>Transaction records are kept as required by tax\/accounting laws. Technical logs are retained by our providers per their policies. We do not otherwise retain your images after processing completes.<\/p>
-        <h4>Your rights<\/h4>
-        <p>Where applicable, you may request access, correction, deletion, or portability of your personal data, and object to or restrict processing. Contact <a href="mailto:support@yourdomain.com">support@yourdomain.com<\/a>. You may also have the right to complain to your local data protection authority.<\/p>
-        <h4>International transfers<\/h4>
-        <p>Your data may be processed in countries outside your own. We rely on our providers' transfer safeguards (e.g., Standard Contractual Clauses) where required.<\/p>
-        <h4>Children<\/h4>
-        <p>Pixweave is not directed to children under 13 (or 16 in some regions). Do not use the service if you do not meet the minimum age requirements.<\/p>
-        <h4>Changes<\/h4>
-        <p>We may update this policy. The updated version will apply from its effective date and be posted here.<\/p>
-      <\/div>
-      <div class="modal-actions"><button class="btn secondary" type="button" data-close-modal>Close<\/button><\/div>
-    <\/div>
-  <\/div>
+ <!-- Privacy Policy Modal -->
+<div id="privacy-modal" class="modal-backdrop" style="display:none">
+  <div class="modal-card" role="dialog" aria-modal="true" aria-labelledby="privacy-title">
+    <div class="modal-head"><span id="privacy-title">Privacy Policy</span></div>
+    <div class="modal-body">
+      <p><strong>Effective date:</strong> 13 August 2025</p>
+      <p>This Privacy Policy explains how <strong>Pixweave</strong> ("we", "us") collects and uses your information when you use our website and the embedded upscaler app. Questions? <a href="mailto:support@yourdomain.com">support@yourdomain.com</a>.</p>
+      <h4>What we collect</h4>
+      <ul>
+        <li><strong>Payments via PayPal.</strong> We receive limited billing details (payer name, email, country, transaction ID). We do <em>not</em> receive or store card numbers.</li>
+        <li><strong>Usage limits.</strong> Plan counters are stored <em>locally</em> via <code>localStorage</code> and are not sent to our servers.</li>
+        <li><strong>Images you upload.</strong> Processing runs on <strong>Hugging Face Spaces</strong>; files are kept only for processing & download, then discarded.</li>
+        <li><strong>Logs & hosting data.</strong> GitHub Pages and Hugging Face may log IPs/devices for security; see their policies.</li>
+      </ul>
+      <h4>Cookies & local storage</h4>
+      <p>Used to remember your plan and enforce quotas. Clearing site data resets counters and may revert to Free.</p>
+      <h4>Legal bases (EEA/UK)</h4>
+      <ul>
+        <li><em>Contract performance</em>, <em>Legitimate interests</em> (fraud prevention, improvements), <em>Consent</em> where required.</li>
+      </ul>
+      <h4>Sharing with processors</h4>
+      <ul>
+        <li><strong>PayPal</strong> — payments</li>
+        <li><strong>Hugging Face, Inc.</strong> — app hosting & inference</li>
+        <li><strong>GitHub, Inc.</strong> — static site hosting</li>
+      </ul>
+      <h4>Retention</h4>
+      <p>Transaction records per tax/accounting law; provider logs per their policies; images not retained after processing.</p>
+      <h4>Your rights</h4>
+      <p>Access, correction, deletion, portability, objection/restriction where applicable. Contact <a href="mailto:support@yourdomain.com">support@yourdomain.com</a>.</p>
+      <h4>International transfers</h4>
+      <p>Data may be processed outside your country; providers use transfer safeguards where required.</p>
+      <h4>Children</h4>
+      <p>Not for children under 13 (or 16 in some regions).</p>
+      <h4>Changes</h4>
+      <p>We may update this policy; new versions apply from their effective date.</p>
+    </div>
+    <div class="modal-actions"><button class="btn secondary" type="button" data-close-modal>Close</button></div>
+  </div>
+</div>
+ 
 
   <!-- Terms of Service Modal -->
   <div id="terms-modal" class="modal-backdrop" style="display:none">
