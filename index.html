@@ -1,46 +1,646 @@
-<!-- Updated Pricing Section -->
-<section id="pricing" style="margin-top:32px">
-  <h2 style="margin:0 0 12px">Pricing</h2>
-  <div class="pricing">
-    <div class="price-card">
-      <span class="chip">Free</span>
-      <h3>For getting started</h3>
-      <div class="price">€0</div>
-      <div class="features">
-        • 3 images/day<br />
-        • Scale 2×<br />
-        • No watermark on 2×
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Pixweave — Image Upscaler</title>
+  <meta name="description" content="Upscale photos and art up to 4× without quality loss. Fast, simple, no Photoshop needed." />
+  <link rel="canonical" href="https://stellaalpina400-a11y.github.io/" />
+  <meta name="theme-color" content="#0f172a" />
+  <!-- Open Graph / Twitter for nice previews -->
+  <meta property="og:title" content="Pixweave — Image Upscaler" />
+  <meta property="og:description" content="Upscale photos and art up to 4× without quality loss. Fast, simple, no Photoshop needed." />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://stellaalpina400-a11y.github.io/" />
+  <meta property="og:image" content="https://stellaalpina400-a11y.github.io/og-image.jpg" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Pixweave — Image Upscaler" />
+  <meta name="twitter:description" content="Upscale photos and art up to 4× without quality loss. Fast, simple, no Photoshop needed." />
+  <meta name="twitter:image" content="https://stellaalpina400-a11y.github.io/og-image.jpg" />
+  
+  <!-- Graphic favicon (SVG) -->
+  <link rel='icon' type='image/svg+xml' href='data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64"><defs><linearGradient id="g" x1="0" x2="1" y1="1" y2="0"><stop stop-color="%23f472b6"/><stop offset="1" stop-color="%2360a5fa"/></linearGradient></defs><rect rx="14" ry="14" width="64" height="64" fill="url(%23g)"/><path d="M22 42 L42 22" stroke="%230b1226" stroke-width="6" stroke-linecap="round"/><path d="M30 22 H42 V34" stroke="%230b1226" stroke-width="6" stroke-linecap="round" fill="none"/></svg>' />
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png" />
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+  <style>
+    :root{
+      --bg: #0f172a;            /* фон страницы (тёмный индиго) */
+      --card: #0b1226;          /* карточки */
+      --muted: #94a3b8;         /* приглушённый текст */
+      --text: #e5e7eb;          /* основной текст */
+      --accent: #f472b6; /* розовый акцент */
+      --accent-2: #60a5fa; /* голубой акцент */      /* второй акцент (индиго) */
+      --shadow: 0 10px 30px rgba(0,0,0,.35);
+      --radius: 18px;
+    }
+    html,body{height:100%; background: radial-gradient(1000px 600px at 10% -10%, rgba(34,211,238,.15), transparent 60%),
+                                         radial-gradient(800px 500px at 110% 10%, rgba(129,140,248,.10), transparent 60%), var(--bg);
+               margin:0; font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Inter, Arial, "Apple Color Emoji", "Segoe UI Emoji"; color:var(--text)}
+    a{color:inherit; text-decoration:none}
+    .container{max-width:1100px; margin:0 auto; padding:0 20px}
+    .btn{display:inline-flex; align-items:center; gap:.6rem; background:linear-gradient(90deg, var(--accent), var(--accent-2)); border:none; color:#0b1226; font-weight:700; padding:14px 20px; border-radius:12px; cursor:pointer; box-shadow: var(--shadow); transition:.2s transform; box-sizing:border-box}
+    .btn:hover{transform:translateY(-2px)}
+    .btn.secondary{background:linear-gradient(90deg, var(--accent), var(--accent-2)); color:#0b1226; border:none; box-shadow: var(--shadow)}
+    header{position:sticky; top:0; backdrop-filter: blur(12px); background:rgba(10,16,35,.55); border-bottom:1px solid rgba(255,255,255,.06); z-index:50}
+    header .inner{display:flex; align-items:center; justify-content:space-between; padding:14px 0}
+    .logo{display:flex; align-items:center; gap:.7rem; font-weight:900; letter-spacing:.3px}
+    .logo-mark{width:28px; height:28px; border-radius:9px; box-shadow: var(--shadow)}
+    .logo-type{display:flex; align-items:center; gap:.12rem; font-size:18px}
+    .logo-type .lift, .logo-type .pix{position:relative; background:linear-gradient(90deg, var(--accent), var(--accent-2)); -webkit-background-clip:text; background-clip:text; color:transparent}
+    .lift-arrows{display:inline-flex; margin:0 .16rem; opacity:.95}
+    .lift-arrows svg{display:block}
+    .chip{font-size:12px; padding:6px 10px; border-radius:999px; background:rgba(129,140,248,.15); color:#c7d2fe; border:1px solid rgba(129,140,248,.3)}
+
+    /* Hero */
+    .hero{padding:52px 0 22px}
+    .hero h1{font-size:38px; line-height:1.1; margin:0 0 14px; letter-spacing:.2px}
+    .hero p{color:var(--muted); margin:0 0 20px}
+    .hero .cta{display:flex; gap:12px; flex-wrap:wrap}
+    .panel{margin-top:28px; display:grid; grid-template-columns:1.2fr .8fr; gap:18px}
+    @media (max-width:900px){ .panel{grid-template-columns:1fr;}}
+
+    /* Before/After */
+    .ba-card{background:linear-gradient(180deg, rgba(255,255,255,.04), rgba(255,255,255,.01)); padding:16px; border:1px solid rgba(255,255,255,.06); border-radius:var(--radius); box-shadow: var(--shadow)}
+    .ba-wrap{position:relative; overflow:hidden; border-radius:12px; background:#0a0f1f; height:clamp(220px,30vw,320px)}
+    .ba-wrap img{display:block; width:100%; height:100%; object-fit:contain; background:#0a0f1f; user-select:none; -webkit-user-drag:none}
+    .ba-top{position:absolute; inset:0; overflow:hidden}
+    .ba-top img{position:absolute; inset:0; width:100%; height:100%; object-fit:contain; background:#0a0f1f}
+    .ba-slider{position:absolute; left:0; right:0; bottom:10px; display:flex; justify-content:center}
+    .ba-input{width:100%; appearance:none; height:4px; background:#111827; border-radius:999px; outline:none}
+    .ba-input::-webkit-slider-thumb{appearance:none; width:18px; height:18px; border-radius:50%; background:linear-gradient(90deg,var(--accent),var(--accent-2)); border:none; box-shadow:0 0 0 4px rgba(34,211,238,.25)}
+
+    /* Before/After labels and divider */
+    .ba-wrap::after{content:''; position:absolute; top:0; bottom:0; width:2px; background:linear-gradient(to bottom, rgba(244,114,182,.8), rgba(96,165,250,.8)); left: calc(var(--pos, 50) * 1%); transform: translateX(-1px);}
+    .ba-label{position:absolute; top:10px; padding:6px 10px; font-size:12px; border-radius:999px; background:rgba(10,15,31,.7); border:1px solid rgba(255,255,255,.1); color:#e5e7eb}
+    .ba-label.left{ left:10px }
+    .ba-label.right{ right:10px }
+
+    @media (max-width:900px){ .ba-wrap{ height:clamp(180px,44vw,260px) } }
+
+    /* Cards */
+    .cards{display:grid; grid-template-columns:repeat(4,1fr); gap:12px}
+    @media (max-width:900px){ .cards{grid-template-columns:repeat(2,1fr);} }
+    @media (max-width:560px){ .cards{grid-template-columns:1fr;} }
+    .card{background:linear-gradient(180deg, rgba(255,255,255,.04), rgba(255,255,255,.01)); padding:16px; border:1px solid rgba(255,255,255,.06); border-radius:var(--radius)}
+    .card h3{margin:6px 0 4px; font-size:16px}
+    .card p{margin:0; color:var(--muted); font-size:14px}
+
+    /* Embed */
+    .embed{background:linear-gradient(180deg, rgba(255,255,255,.04), rgba(255,255,255,.01)); padding:14px; border:1px solid rgba(255,255,255,.06); border-radius:var(--radius); box-shadow: var(--shadow)}
+    .embed iframe{width:100%; height:70vh; border:0; border-radius:12px; background:#0a0f1f}
+    /* App chrome + gradient frame */
+    .btn.small{padding:8px 12px; font-size:13px; box-shadow:none}
+    .app-chrome{display:flex; align-items:center; justify-content:space-between; padding:10px 12px; border-radius:12px; border:1px solid rgba(255,255,255,.06); background:linear-gradient(180deg, rgba(255,255,255,.04), rgba(255,255,255,.01)); margin:0 0 10px}
+    .app-chrome .left{display:flex; align-items:center; gap:10px}
+    .traffic-dots{display:inline-flex; gap:6px; margin-right:4px}
+    .traffic-dots i{width:8px; height:8px; border-radius:50%; display:inline-block; background:#ef4444}
+    .traffic-dots i:nth-child(2){background:#f59e0b}
+    .traffic-dots i:nth-child(3){background:#22c55e}
+    .status{display:inline-flex; align-items:center; gap:6px; color:var(--muted); font-size:13px}
+    .status .dot{width:8px; height:8px; border-radius:50%; background:#f59e0b; box-shadow:0 0 0 3px rgba(245,158,11,.15)}
+    .frame-wrap{padding:1px; border-radius:12px; background:linear-gradient(90deg, rgba(244,114,182,.35), rgba(96,165,250,.35))}
+    .frame{position:relative; border-radius:11px; overflow:hidden; background:#0a0f1f}
+
+    /* Gallery */
+    .grid{display:grid; grid-template-columns:repeat(3, 1fr); gap:12px}
+    @media (max-width:900px){ .grid{grid-template-columns:repeat(2,1fr);} }
+    @media (max-width:560px){ .grid{grid-template-columns:1fr;} }
+    .tile{overflow:hidden; border-radius:12px; border:1px solid rgba(255,255,255,.08)}
+
+    /* Pricing */
+    .pricing{display:grid; grid-template-columns:repeat(3,1fr); gap:14px; align-items:stretch}
+    @media (max-width:900px){ .pricing{grid-template-columns:1fr;} }
+    .price-card{position:relative; background:linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.02)); border:1px solid rgba(255,255,255,.09); border-radius:var(--radius); padding:22px; display:flex; flex-direction:column}
+    .price-card h3{margin:4px 0 8px}
+    .price{font-size:32px; font-weight:800; letter-spacing:.2px}
+    .features{margin:10px 0 16px; color:var(--muted); flex:1}
+
+    footer{margin:38px 0 40px; color:var(--muted)}
+    .muted{color:var(--muted)}
+     /* Modal (improved contrast & stability) */
+.modal-backdrop{
+  position:fixed; inset:0; background:rgba(0,0,0,.75);
+  display:none; align-items:center; justify-content:center; padding:16px; z-index:1000;
+}
+.modal-card{
+  background:#0b1226; border:1px solid rgba(255,255,255,.16);
+  border-radius:var(--radius); width:min(720px, 96vw); max-height:84vh;
+  box-shadow:var(--shadow); color:var(--text);
+  display:flex; flex-direction:column; /* allow inner body to flex/scroll */
+  overflow:hidden;
+}
+.modal-head{
+  padding:16px 18px; font-weight:800; letter-spacing:.2px;
+  background:rgba(129,140,248,.18); border-bottom:1px solid rgba(255,255,255,.12);
+}
+.modal-body{
+  padding:16px 18px; line-height:1.55;
+  overflow:auto; flex:1; min-height:0; /* enable scroll inside flex parent */
+  -webkit-overflow-scrolling: touch;
+}
+.modal-body h4{ margin:16px 0 8px; font-size:16px; }
+.modal-body a{ color:#93c5fd; text-decoration:underline; }
+.modal-body p, .modal-body li{ color:var(--text); }
+.modal-actions{
+  display:flex; gap:10px; padding:14px 18px; justify-content:flex-end;
+  border-top:1px solid rgba(255,255,255,.12); background:rgba(255,255,255,.03);
+}
+/* Iframe loader */ 
+    .embed { position: relative; }
+    .iframe-loader{position:absolute; inset:14px; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:10px; background:linear-gradient(180deg, rgba(10,15,31,.85), rgba(10,15,31,.75)); border-radius:12px; border:1px dashed rgba(255,255,255,.15); pointer-events:none}
+    .spinner{width:32px;height:32px;border-radius:50%; border:3px solid rgba(255,255,255,.2); border-top-color: #a5f3fc; animation:spin 1s linear infinite}
+    @keyframes spin{to{transform:rotate(360deg)}}
+    .loader-text{color:var(--muted); font-size:14px; text-align:center}
+      html{ scroll-behavior:smooth }
+    section{ scroll-margin-top: 84px }
+    /* Top progress bar */
+    #top-progress{position:fixed; top:0; left:0; height:3px; width:0; background:linear-gradient(90deg, var(--accent), var(--accent-2)); box-shadow:0 2px 8px rgba(0,0,0,.35); z-index:1000; transition:width .25s ease, opacity .3s ease; opacity:1}
+    /* Ensure pricing buttons stick to the bottom and span full width */
+  .price-card .btn{margin-top:auto; width:100%; box-sizing:border-box; justify-content:center; display:flex; align-self:stretch; margin-inline:0}
+  </style>
+</head>
+<body>
+  <header>
+    <div class="container inner">
+      <div class="logo" aria-label="Pixweave">
+        <!-- Brand mark: gradient tile with arrow up-right (consistent with favicon) -->
+        <svg class="logo-mark" viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <defs>
+            <linearGradient id="gmark" x1="0" x2="1" y1="1" y2="0">
+              <stop stop-color="#f472b6"/>
+              <stop offset="1" stop-color="#60a5fa"/>
+            </linearGradient>
+          </defs>
+          <rect rx="14" ry="14" width="64" height="64" fill="url(#gmark)"/>
+          <path d="M22 42 L42 22" stroke="#0b1226" stroke-width="6" stroke-linecap="round"/>
+          <path d="M30 22 H42 V34" stroke="#0b1226" stroke-width="6" stroke-linecap="round" fill="none"/>
+        </svg>
+        <!-- Wordmark with lift motif: Pixel [arrows] Lift -->
+        <span class="logo-type"><span class="pix">Pix</span>
+          <span class="lift-arrows" aria-hidden="true">
+            <svg width="12" height="18" viewBox="0 0 14 18" xmlns="http://www.w3.org/2000/svg">
+              <defs>
+                <linearGradient id="gar" x1="0" x2="1" y1="1" y2="0">
+                  <stop stop-color="#f472b6"/>
+                  <stop offset="1" stop-color="#60a5fa"/>
+                </linearGradient>
+              </defs>
+              <!-- Up arrow -->
+              <path d="M7 2 L10.5 5.5 M7 2 L3.5 5.5" stroke="url(#gar)" stroke-width="2" stroke-linecap="round" fill="none"/>
+              <!-- Down arrow -->
+              <path d="M7 16 L10.5 12.5 M7 16 L3.5 12.5" stroke="url(#gar)" stroke-width="2" stroke-linecap="round" fill="none"/>
+              <!-- Center rail -->
+              <path d="M7 3 L7 15" stroke="#94a3b8" stroke-width="1.6" stroke-linecap="round" opacity=".6"/>
+            </svg>
+          </span>
+          <span class="lift">weave</span>
+        </span>
       </div>
-      <a href="#app" class="btn secondary">Start for free</a>
+      <nav style="display:flex; gap:14px; align-items:center">
+        <a href="#how">How it works</a>
+        <a href="#pricing">Pricing</a></nav>
     </div>
-    <div class="price-card" style="border-color:rgba(34,211,238,.6); box-shadow:0 10px 40px rgba(34,211,238,.15)">
-      <span class="chip" style="background:rgba(34,211,238,.15); color:#a5f3fc; border-color:rgba(34,211,238,.35)">Best value</span>
-      <h3>Pro</h3>
-      <div class="price">€9/mo</div>
-      <div class="features">
-        • Up to 150 images/month<br />
-        • Scale 4×<br />
-        • No watermark
+  </header>
+
+  <main class="container">
+    <!-- HERO -->
+    <section class="hero"><h1>Upscale your photos and art to <span style="background:linear-gradient(90deg,var(--accent),var(--accent-2)); -webkit-background-clip:text; background-clip:text; color:transparent">4×</span> in seconds</h1>
+      <p>Enlarge your photos, prep illustrations for print, and enhance scans — no Photoshop, no fuss.</p>
+      <div class="cta">
+        <a href="#app" class="btn">Try it free</a>
+        <a href="#pricing" class="btn secondary">Compare plans</a>
       </div>
-      <a href="#pay" class="btn">Buy Pro</a>
-    </div>
-    <div class="price-card">
-      <span class="chip">Studio</span>
-      <h3>For creative work</h3>
-      <div class="price">€29/mo</div>
-      <div class="features">
-        • Up to 1000 images/month<br />
-        • Scale 4×<br />
-        • No watermark
+
+      <!-- panel: before/after + bullets -->
+      <div class="panel">
+        <!-- Before/After -->
+        <div class="ba-card">
+          <div class="muted" style="margin-bottom:8px">Sample result</div>
+          <div class="ba-wrap" id="ba">
+            <!-- ↓ Замените изображения на свои примеры -->
+            <img src="/demo/sample_before.jpg" alt="Before" />
+            <div class="ba-top" id="baTop">
+              <img src="/demo/sample_after.jpg" alt="After" />
+            </div>
+            <div class="ba-label left">Before</div><div class="ba-label right">After</div>
+            <div class="ba-slider"><input class="ba-input" id="baRange" type="range" min="0" max="100" value="50" /></div>
+          </div>
+        </div>
+        <!-- bullets -->
+        <div class="card" id="how">
+          <h3>Who it's for</h3>
+          <p>• Artists — keep linework and paper texture intact.</p>
+          <p>• Photographers — crisp detail without extra noise.</p>
+          <p>• Retro photos — enlarge for sharing or printing.</p>
+          <p>• Designers — ready for print in high resolution, fast.</p>
+          <div style="height:10px"></div>
+          <h3>Modes</h3>
+          <p class="muted">Photo \/ Art \/ Scans, 2× or 4×, optional face enhancement.</p>
+        </div>
       </div>
-      <a href="#pay-studio" class="btn">Buy Studio</a>
+    </section>
+
+    <!-- EMBED APP -->
+    <section id="app" class="embed"><div class="app-chrome">
+        <div class="left">
+          <span class="traffic-dots" aria-hidden="true"><i></i><i></i><i></i></span>
+          <strong class="muted" style="letter-spacing:.2px">Pixweave App</strong>
+          <span class="status"><span class="dot"></span><span class="label">Warming up…</span></span>
+        </div>
+      </div>
+      <div class="frame-wrap">
+        <div class="frame">
+          <iframe id="app-frame" src="https://serghejl-pixellift.hf.space/?v=11" loading="lazy" allow="clipboard-read; clipboard-write; camera; microphone;"></iframe>
+          <div id="app-loader" class="iframe-loader">
+            <div class="spinner"></div>
+            <div class="loader-text">First launch may take 10–60s — the Space is waking up.</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- GALLERY -->
+    <section style="margin-top:28px"><div class="grid">
+        <div class="tile"><img src="https://picsum.photos/seed/a/900/600" alt="example" width="100%" /></div>
+        <div class="tile"><img src="https://picsum.photos/seed/b/900/600" alt="example" width="100%" /></div>
+        <div class="tile"><img src="https://picsum.photos/seed/c/900/600" alt="example" width="100%" /></div>
+        <div class="tile"><img src="https://picsum.photos/seed/d/900/600" alt="example" width="100%" /></div>
+        <div class="tile"><img src="https://picsum.photos/seed/e/900/600" alt="example" width="100%" /></div>
+        <div class="tile"><img src="https://picsum.photos/seed/f/900/600" alt="example" width="100%" /></div>
+      </div>
+    </section>
+
+    <!-- PRICING -->
+    <section id="pricing" style="margin-top:32px">
+      <h2 style="margin:0 0 12px">Pricing</h2>
+      <div class="pricing">
+        <div class="price-card">
+          <span class="chip">Free</span>
+          <h3>For getting started</h3>
+          <div class="price">€0</div>
+          <div class="features">
+            • 3 images/day<br />
+            • Scale 2×<br />
+            • Watermark
+          </div>
+          <a href="#app" class="btn secondary" style="width:100%; justify-content:center">Start for free</a>
+        </div>
+        <div class="price-card" style="border-color:rgba(34,211,238,.6); box-shadow:0 10px 40px rgba(34,211,238,.15)">
+          <span class="chip" style="background:rgba(34,211,238,.15); color:#a5f3fc; border-color:rgba(34,211,238,.35)">Recommended</span>
+          <h3>Pro</h3>
+          <div class="price">€9/mo</div>
+          <div class="features">
+            • Up to 100 images/month<br />
+            • Scale 4×<br />
+            • No watermark
+          </div>
+          <a href="#pay" class="btn" style="width:100%; justify-content:center">Buy Pro</a>
+        </div>
+        <div class="price-card">
+          <span class="chip">Studio</span>
+          <h3>For creative work</h3>
+          <div class="price">€29/mo</div>
+          <div class="features">
+            • Up to 1000 images/month<br />
+            • Scale 4×<br />
+            • No watermark
+          </div>
+          <a href="#pay-studio" class="btn" style="width:100%; justify-content:center">Buy Studio</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- PAYPAL (Pro) -->
+    <section id="pay" class="embed" style="margin-top:28px">
+      <h2 style="margin:0 0 10px">Pay for Pro with PayPal</h2>
+      <div id="paypal-button-container-pro"></div>
+      <div class="muted" style="margin-top:10px">Price: €9/month. You’ll receive a confirmation email after payment.</div>
+    </section>
+
+    <!-- PAYPAL (Studio) -->
+    <section id="pay-studio" class="embed" style="margin-top:16px">
+      <h2 style="margin:0 0 10px">Pay for Studio with PayPal</h2>
+      <div id="paypal-button-container-studio"></div>
+      <div class="muted" style="margin-top:10px">Price: €29/month. You’ll receive a confirmation email after payment.</div>
+    </section>
+
+    <!-- CTA -->
+    <section style="margin-top:30px; background:linear-gradient(90deg, rgba(34,211,238,.12), rgba(129,140,248,.12)); border:1px solid rgba(255,255,255,.1); padding:18px; border-radius:var(--radius)">
+      <div style="display:flex; flex-wrap:wrap; align-items:center; gap:14px; justify-content:space-between">
+        <div>
+          <h3 style="margin:0 0 4px">Ready to try?</h3>
+          <div class="muted">Upload an image and get the result in ~10 seconds.</div>
+        </div>
+        <a href="#app" class="btn">Open the upscaler</a>
+      </div>
+    </section>
+
+    <footer>
+      <div style="height:20px"></div>
+      <div style="display:flex; justify-content:space-between; gap:12px; flex-wrap:wrap">
+        <div>© <span id="year"></span> Pixweave</div>
+        <div class="muted">
+          <a href="mailto:support@yourdomain.com">support@yourdomain.com</a>
+          · <a href="#" id="link-privacy" data-no-progress="true">Privacy</a>
+          · <a href="#" id="link-terms" data-no-progress="true">Terms</a>
+        </div>
+      </div>
+    </footer>
+
+  <!-- Payment Thank-You Modal -->
+  <div id="pay-modal" class="modal-backdrop" style="display:none">
+    <div class="modal-card" role="dialog" aria-modal="true" aria-labelledby="pm-title">
+      <div class="modal-head">
+        <span id="pm-title">Payment successful 🎉</span>
+      </div>
+      <div class="modal-body">
+        <div style="margin-bottom:6px"><strong id="pm-name">Customer</strong>, your <strong id="pm-tier">Pro</strong> payment was successful.</div>
+        <div class="muted">Amount: <span id="pm-amount">—</span></div>
+        <div class="muted">Order ID: <code id="pm-order">—</code></div>
+      </div>
+      <div class="modal-actions">
+        <a href="#app" class="btn" id="pm-goto">Back to the upscaler</a>
+        <button class="btn secondary" id="pm-close" type="button">Close</button>
+      </div>
     </div>
   </div>
-  <div style="margin-top:20px; text-align:center" class="muted">
-    Prefer one-time credits? Try our Pay‑as‑you‑go packs:<br />
-    €5 → 50 images · €9 → 100 images · €25 → 300 images · €79 → 1000 images
+
+  
+ <!-- Privacy Policy Modal -->
+<div id="privacy-modal" class="modal-backdrop" style="display:none">
+  <div class="modal-card" role="dialog" aria-modal="true" aria-labelledby="privacy-title">
+    <div class="modal-head"><span id="privacy-title">Privacy Policy</span></div>
+    <div class="modal-body">
+      <p><strong>Effective date:</strong> 13 August 2025</p>
+      <p>This Privacy Policy explains how <strong>Pixweave</strong> ("we", "us") collects and uses your information when you use our website and the embedded upscaler app. Questions? <a href="mailto:support@yourdomain.com">support@yourdomain.com</a>.</p>
+      <h4>What we collect</h4>
+      <ul>
+        <li><strong>Payments via PayPal.</strong> We receive limited billing details (payer name, email, country, transaction ID). We do <em>not</em> receive or store card numbers.</li>
+        <li><strong>Usage limits.</strong> Plan counters are stored <em>locally</em> via <code>localStorage</code> and are not sent to our servers.</li>
+        <li><strong>Images you upload.</strong> Processing runs on <strong>Hugging Face Spaces</strong>; files are kept only for processing & download, then discarded.</li>
+        <li><strong>Logs & hosting data.</strong> GitHub Pages and Hugging Face may log IPs/devices for security; see their policies.</li>
+      </ul>
+      <h4>Cookies & local storage</h4>
+      <p>Used to remember your plan and enforce quotas. Clearing site data resets counters and may revert to Free.</p>
+      <h4>Legal bases (EEA/UK)</h4>
+      <ul>
+        <li><em>Contract performance</em>, <em>Legitimate interests</em> (fraud prevention, improvements), <em>Consent</em> where required.</li>
+      </ul>
+      <h4>Sharing with processors</h4>
+      <ul>
+        <li><strong>PayPal</strong> — payments</li>
+        <li><strong>Hugging Face, Inc.</strong> — app hosting & inference</li>
+        <li><strong>GitHub, Inc.</strong> — static site hosting</li>
+      </ul>
+      <h4>Retention</h4>
+      <p>Transaction records per tax/accounting law; provider logs per their policies; images not retained after processing.</p>
+      <h4>Your rights</h4>
+      <p>Access, correction, deletion, portability, objection/restriction where applicable. Contact <a href="mailto:support@yourdomain.com">support@yourdomain.com</a>.</p>
+      <h4>International transfers</h4>
+      <p>Data may be processed outside your country; providers use transfer safeguards where required.</p>
+      <h4>Children</h4>
+      <p>Not for children under 13 (or 16 in some regions).</p>
+      <h4>Changes</h4>
+      <p>We may update this policy; new versions apply from their effective date.</p>
+    </div>
+    <div class="modal-actions"><button class="btn secondary" type="button" data-close-modal>Close</button></div>
   </div>
-</section>
+</div>
+ 
+
+<!-- Terms of Service Modal -->
+<div id="terms-modal" class="modal-backdrop" style="display:none">
+  <div class="modal-card" role="dialog" aria-modal="true" aria-labelledby="terms-title">
+    <div class="modal-head"><span id="terms-title">Terms of Service</span></div>
+    <div class="modal-body">
+      <p><strong>Last updated:</strong> 13 August 2025</p>
+      <h4>1. Service</h4>
+      <p>Pixweave upscales images (2× or 4×). Free plan adds a watermark and daily limits. Pro/Studio remove the watermark and increase limits.</p>
+      <h4>2. Payments & subscriptions</h4>
+      <p>Payments are processed by PayPal. We do not store card details. Manage or cancel recurring payments in your PayPal account.</p>
+      <h4>3. Refunds</h4>
+      <p>Technical issues? Email <a href="mailto:support@yourdomain.com">support@yourdomain.com</a> within 7 days. Refunds are discretionary, considering usage and troubleshooting.</p>
+      <h4>4. Fair use & limits</h4>
+      <p>Do not bypass plan limits or remove watermarks on the Free plan. Limits/pricing may change with notice on the site.</p>
+      <h4>5. Acceptable use</h4>
+      <p>No unlawful, infringing, exploitative, or violent content. We may suspend access for abuse/security reasons.</p>
+      <h4>6. Ownership</h4>
+      <p>You own your images; you grant us a limited license to process them to provide the service.</p>
+      <h4>7. Availability & changes</h4>
+      <p>Service is provided “as is” without warranties. We may change or discontinue features. Liability limited to amounts paid in the prior 3 months, where permitted.</p>
+      <h4>8. Governing law</h4>
+      <p>Serbian law; courts of Belgrade (unless mandatory law says otherwise).</p>
+      <h4>9. Contact</h4>
+      <p><a href="mailto:support@yourdomain.com">support@yourdomain.com</a></p>
+    </div>
+    <div class="modal-actions"><button class="btn secondary" type="button" data-close-modal>Close</button></div>
+  </div>
+</div>
+  
+</main>
+
+  <script>
+    // Before/After slider logic (draggable + keyboard)
+    const ba = document.getElementById('ba');
+    const range = document.getElementById('baRange');
+    const topLayer = document.getElementById('baTop');
+
+    function clip(){
+      const v = +range.value; // 0..100
+      topLayer.style.clipPath = `inset(0 ${100 - v}% 0 0)`;
+      ba.style.setProperty('--pos', v);
+    }
+    range.addEventListener('input', clip);
+
+    // drag anywhere on the image
+    let dragging = false;
+    function move(e){
+      const rect = ba.getBoundingClientRect();
+      const clientX = e.clientX || (e.touches && e.touches[0]?.clientX) || 0;
+      const x = Math.min(Math.max(clientX - rect.left, 0), rect.width);
+      const v = Math.round(x / rect.width * 100);
+      range.value = v; clip();
+    }
+    ba.addEventListener('pointerdown', (e)=>{ dragging=true; ba.setPointerCapture(e.pointerId); move(e); });
+    ba.addEventListener('pointermove', (e)=>{ if(dragging) move(e); });
+    ba.addEventListener('pointerup', ()=> dragging=false);
+    ba.addEventListener('pointerleave', ()=> dragging=false);
+
+    clip();
+    document.getElementById('year').textContent = new Date().getFullYear();
+  </script>
+  <script>
+    // Iframe loader control (with hard fallback + click-through overlay)
+    (function(){
+      const frame = document.getElementById('app-frame');
+      const loader = document.getElementById('app-loader');
+      const statusDot = document.querySelector('.status .dot');
+      const statusLabel = document.querySelector('.status .label');
+      if(statusLabel) statusLabel.textContent = 'Warming up…';
+      if(!frame || !loader) return;
+
+      function markReady(){
+        loader.style.display = 'none';
+        if(statusDot){ statusDot.style.background = '#22c55e'; statusDot.style.boxShadow = '0 0 0 3px rgba(34,197,94,.18)'; }
+        if(statusLabel) statusLabel.textContent = 'Ready';
+      }
+
+      frame.addEventListener('load', markReady, { once: true });
+
+      // Soft hint after 15s
+      setTimeout(()=>{
+        const lt = loader.querySelector('.loader-text');
+        if(lt && loader.style.display !== 'none'){
+          lt.innerHTML = 'This is taking longer than usual — the Space is waking up...';
+          if(statusLabel) statusLabel.textContent = 'Starting…';
+        }
+      }, 15000);
+
+      // Hard fallback: hide overlay after 45s even if load didn\'t fire (overlay is pointer-events:none anyway)
+      setTimeout(()=>{
+        if(loader && loader.style.display !== 'none') markReady();
+      }, 45000);
+    })();
+  </script>
+  <script>
+    // Top progress bar on in-page navigation
+    (function(){
+      const bar = document.createElement('div');
+      bar.id = 'top-progress';
+      document.addEventListener('DOMContentLoaded', ()=> document.body.appendChild(bar));
+      let timer = null, prog = 0;
+      function start(){
+        if(!bar.parentNode) document.body.appendChild(bar);
+        bar.style.display='block'; bar.style.opacity='1'; bar.style.width='0%';
+        prog = 0; (function inc(){ prog += Math.random()*15+5; if(prog<90){ bar.style.width = prog+'%'; timer = setTimeout(inc, 180);} })();
+      }
+      function done(){
+        if(timer) clearTimeout(timer);
+        bar.style.width='100%';
+        setTimeout(()=>{ bar.style.opacity='0'; }, 250);
+        setTimeout(()=>{ bar.style.display='none'; bar.style.width='0%'; }, 800);
+      }
+      // Hook all hash links
+      function hook(a){ a.addEventListener('click', (e)=>{ const href=a.getAttribute('href')||''; if(href.startsWith('#')){ start(); setTimeout(done, 900); } }); }
+      document.querySelectorAll('a[href^="#"]').forEach(hook);
+      window.addEventListener('hashchange', ()=> setTimeout(done, 500));
+      // Expose (optional)
+      window.ProgressBarTop = { start, done };
+    })();
+  </script>
+  <script>
+  // Tier switcher patch: remembers paid tier and swaps iframe to Pro/Studio Space
+  (function(){
+    const PRO_URL = "https://serghejl-pixweave-pro.hf.space/?v=1";
+    const STUDIO_URL = "https://serghejl-pixweave-studio.hf.space/?v=1";
+    const frame = document.getElementById('app-frame');
+
+    function setTier(tier){
+      try{
+        const until = Date.now() + 30*24*60*60*1000; // naive 30-day window
+        localStorage.setItem('pixweave_tier', tier);
+        localStorage.setItem('pixweave_tier_until', String(until));
+        if(frame){ frame.src = (tier === 'pro') ? PRO_URL : STUDIO_URL; }
+      }catch(e){ /* ignore */ }
+    }
+
+    (function applySavedTier(){
+      try{
+        const t = localStorage.getItem('pixweave_tier');
+        const u = Number(localStorage.getItem('pixweave_tier_until')||0);
+        if(t && u && Date.now() < u){
+          if(frame){ frame.src = (t === 'pro') ? PRO_URL : STUDIO_URL; }
+        }else{
+          localStorage.removeItem('pixweave_tier');
+          localStorage.removeItem('pixweave_tier_until');
+        }
+      }catch(e){ /* ignore */ }
+    })();
+
+    window.__pixweaveSetTier = setTier; // expose for PayPal callbacks
+  })();
+  </script>
+  <script>
+  // Privacy & Terms modal logic
+  (function(){
+    const linkPrivacy = document.getElementById('link-privacy');
+    const linkTerms = document.getElementById('link-terms');
+    const pm = document.getElementById('privacy-modal');
+    const tm = document.getElementById('terms-modal');
+    function openM(m){ if(m) { m.style.display='flex'; setTimeout(()=>{ m.querySelector('.modal-card')?.focus(); }, 30); } }
+    function closeM(m){ if(m) m.style.display='none'; }
+    linkPrivacy && linkPrivacy.addEventListener('click', function(e){ e.preventDefault(); openM(pm); });
+    linkTerms && linkTerms.addEventListener('click', function(e){ e.preventDefault(); openM(tm); });
+    document.querySelectorAll('[data-close-modal]').forEach(btn=>{
+      btn.addEventListener('click', ()=> closeM(btn.closest('.modal-backdrop')));
+    });
+    [pm, tm].forEach(m=>{ m && m.addEventListener('click', (e)=>{ if(e.target===m) closeM(m); }); });
+    document.addEventListener('keydown', (e)=>{ if(e.key==='Escape'){ closeM(pm); closeM(tm); }});
+  })();
+  </script>
+  <script src="https://www.paypal.com/sdk/js?client-id=Af35y8NbuqUdx61ImqpHeKHxbfcuieEhpbp-P45jEYuPEKEO0Fk3Y3POyO-nXvLO6-edioFPpKL9qTtb&currency=EUR&locale=en_US"></script>
+  <script>
+    // Modal helpers for PayPal thank-you
+    (function(){
+      const modal = document.getElementById('pay-modal');
+      const byId = (id)=> document.getElementById(id);
+      function showThankYou(details, tier, amountText){
+        const name = (details?.payer?.name?.given_name) || (details?.payer?.name?.surname) || 'customer';
+        const orderId = details?.id || details?.purchase_units?.[0]?.payments?.captures?.[0]?.id || '—';
+        byId('pm-name').textContent = name;
+        byId('pm-tier').textContent = tier;
+        byId('pm-amount').textContent = amountText || '—';
+        byId('pm-order').textContent = orderId;
+        modal.style.display = 'flex';
+        setTimeout(()=>{ byId('pm-goto').focus(); }, 50);
+      }
+      function closePayModal(){ modal.style.display = 'none'; }
+      modal.addEventListener('click', (e)=> { if(e.target === modal) closePayModal(); });
+      document.getElementById('pm-close')?.addEventListener('click', closePayModal);
+      document.addEventListener('keydown', (e)=> { if(e.key === 'Escape') closePayModal(); });
+      window.showThankYou = showThankYou;
+      window.closePayModal = closePayModal;
+    })();
+  </script>
+  <script>
+    paypal.Buttons({
+      style: { layout: 'vertical', shape: 'rect' },
+      createOrder: function(data, actions){
+        return actions.order.create({
+          purchase_units: [{ amount: { value: '9.00', currency_code: 'EUR' }, description: 'Pixweave Pro Monthly' }]
+        });
+      },
+      onApprove: function(data, actions){
+        return actions.order.capture().then(function(details){
+          const amt = (details?.purchase_units?.[0]?.payments?.captures?.[0]?.amount) || (details?.purchase_units?.[0]?.amount);
+          const amtText = amt ? (amt.value + ' ' + (amt.currency_code || 'EUR')) : '€9.00 EUR';
+          showThankYou(details, 'Pro', amtText);
+          window.__pixweaveSetTier && window.__pixweaveSetTier('pro');
+        });
+      }
+    }).render('#paypal-button-container-pro');
+
+    paypal.Buttons({
+      style: { layout: 'vertical', shape: 'rect' },
+      createOrder: function(data, actions){
+        return actions.order.create({
+          purchase_units: [{ amount: { value: '29.00', currency_code: 'EUR' }, description: 'Pixweave Studio Monthly' }]
+        });
+      },
+      onApprove: function(data, actions){
+        return actions.order.capture().then(function(details){
+          const amt = (details?.purchase_units?.[0]?.payments?.captures?.[0]?.amount) || (details?.purchase_units?.[0]?.amount);
+          const amtText = amt ? (amt.value + ' ' + (amt.currency_code || 'EUR')) : '€29.00 EUR';
+          showThankYou(details, 'Studio', amtText);
+          window.__pixweaveSetTier && window.__pixweaveSetTier('studio');
+        });
+      }
+    }).render('#paypal-button-container-studio');
+  </script>
+</body>
+</html>
+
+
 
 
 
