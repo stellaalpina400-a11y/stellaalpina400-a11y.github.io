@@ -3,10 +3,24 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Pixweave — Image Upscaler</title>
-  <meta name="description" content="Upscale photos and art up to 4× without quality loss. Fast, simple, no Photoshop needed." />
+  <title>Pixweave — AI Image Upscaler (2×/4×) with Face Enhancement</title>
+  <meta name="description" content="AI upscaling for photos and art: clean 2×/4× enlargement, optional face enhancement, no Photoshop needed. Free, Pro and Studio plans." />
   <link rel="canonical" href="https://pixweave.net/" />
   <meta name="theme-color" content="#0f172a" />
+  
+  <!-- Open Graph -->
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://pixweave.net/" />
+  <meta property="og:title" content="Pixweave — AI Image Upscaler (2×/4×)" />
+  <meta property="og:description" content="Clean 2×/4× upscaling for photos and art. Optional face enhancement. Free, Pro and Studio." />
+  <meta property="og:image" content="https://pixweave.net/og.jpg" />
+  <meta property="og:site_name" content="Pixweave" />
+  <meta property="og:locale" content="en_US" />
+  <!-- Twitter -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Pixweave — AI Image Upscaler (2×/4×)" />
+  <meta name="twitter:description" content="Clean 2×/4× upscaling for photos and art. Optional face enhancement." />
+  <meta name="twitter:image" content="https://pixweave.net/og.jpg" />
   
   <!-- Graphic favicon (SVG) -->
   <link rel='icon' type='image/svg+xml' href='data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64"><defs><linearGradient id="g" x1="0" x2="1" y1="1" y2="0"><stop stop-color="%23f472b6"/><stop offset="1" stop-color="%2360a5fa"/></linearGradient></defs><rect rx="14" ry="14" width="64" height="64" fill="url(%23g)"/><path d="M22 42 L42 22" stroke="%230b1226" stroke-width="6" stroke-linecap="round"/><path d="M30 22 H42 V34" stroke="%230b1226" stroke-width="6" stroke-linecap="round" fill="none"/></svg>' />
@@ -155,6 +169,42 @@
     function gtag(){dataLayer.push(arguments);}
     gtag('js', new Date());
     gtag('config', 'G-85H7Y5BX5W');
+  </script>
+  <!-- JSON-LD -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebSite",
+    "name": "Pixweave",
+    "url": "https://pixweave.net/",
+    "description": "AI image upscaling (2×/4×) with optional face enhancement."
+  }
+  </script>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "SoftwareApplication",
+    "name": "Pixweave Upscaler",
+    "applicationCategory": "MultimediaApplication",
+    "operatingSystem": "Web",
+    "offers": [
+      {"@type": "Offer", "name": "Free", "price": "0", "priceCurrency": "EUR"},
+      {"@type": "Offer", "name": "Pro", "price": "9", "priceCurrency": "EUR"},
+      {"@type": "Offer", "name": "Studio", "price": "29", "priceCurrency": "EUR"}
+    ],
+    "url": "https://pixweave.net/"
+  }
+  </script>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {"@type": "Question", "name": "Is there a watermark on the Free plan?", "acceptedAnswer": {"@type": "Answer", "text": "Yes, the Free plan adds a bottom-strip watermark. Pro and Studio have no watermark."}},
+      {"@type": "Question", "name": "How fast is Pixweave?", "acceptedAnswer": {"@type": "Answer", "text": "After the first warm-up, most images process in ~10 seconds on our ZeroGPU (H200) backend."}},
+      {"@type": "Question", "name": "What image sizes can I upscale?", "acceptedAnswer": {"@type": "Answer", "text": "You can upscale 2× or 4×. Typical photos and illustrations up to several megapixels work well."}}
+    ]
+  }
   </script>
 </head>
 <body>
@@ -331,6 +381,13 @@
         </div>
         <a href="#app" class="btn">Open the upscaler</a>
       </div>
+    </section>
+
+    <section id="faq" class="embed" style="margin-top:28px">
+      <h2 style="margin:0 0 10px">FAQ</h2>
+      <details><summary>Is there a watermark on the Free plan?</summary><p>Yes, the Free plan adds a bottom-strip watermark. Pro and Studio have no watermark.</p></details>
+      <details><summary>How fast is Pixweave?</summary><p>After the first warm-up, most images process in around 10 seconds on our ZeroGPU (H200) backend.</p></details>
+      <details><summary>What can I use Pixweave for?</summary><p>Upscale photos, illustrations and scans for sharing, printing, or design work. Choose 2× or 4×; turn Face enhancement on when needed.</p></details>
     </section>
 
     <footer>
@@ -612,6 +669,7 @@
         return actions.order.capture().then(function(details){
           const amt = (details?.purchase_units?.[0]?.payments?.captures?.[0]?.amount) || (details?.purchase_units?.[0]?.amount);
           const amtText = amt ? (amt.value + ' ' + (amt.currency_code || 'EUR')) : '€9.00 EUR';
+          if(window.gtag){ const orderId = (details && (details.id || (details.purchase_units && details.purchase_units[0] && details.purchase_units[0].payments && details.purchase_units[0].payments.captures && details.purchase_units[0].payments.captures[0] && details.purchase_units[0].payments.captures[0].id))) || (data && data.orderID) || 'unknown'; gtag('event','purchase',{transaction_id: orderId, value: 9.00, currency: 'EUR', items:[{item_id:'pro', item_name:'Pro', price:9.00, quantity:1}]}); }
           showThankYou(details, 'Pro', amtText);
           window.__pixweaveSetTier && window.__pixweaveSetTier('pro');
         });
@@ -629,23 +687,29 @@
         return actions.order.capture().then(function(details){
           const amt = (details?.purchase_units?.[0]?.payments?.captures?.[0]?.amount) || (details?.purchase_units?.[0]?.amount);
           const amtText = amt ? (amt.value + ' ' + (amt.currency_code || 'EUR')) : '€29.00 EUR';
+          if(window.gtag){ const orderId = (details && (details.id || (details.purchase_units && details.purchase_units[0] && details.purchase_units[0].payments && details.purchase_units[0].payments.captures && details.purchase_units[0].payments.captures[0] && details.purchase_units[0].payments.captures[0].id))) || (data && data.orderID) || 'unknown'; gtag('event','purchase',{transaction_id: orderId, value: 29.00, currency: 'EUR', items:[{item_id:'studio', item_name:'Studio', price:29.00, quantity:1}]}); }
           showThankYou(details, 'Studio', amtText);
           window.__pixweaveSetTier && window.__pixweaveSetTier('studio');
         });
       }
     }).render('#paypal-button-container-studio');
   </script>
+  <script>
+    // Basic GA4 CTA tracking
+    (function(){
+      function track(sel, evt, params){
+        document.querySelectorAll(sel).forEach(function(el){
+          el.addEventListener('click', function(){ if(window.gtag){ gtag('event', evt, params||{}); } });
+        });
+      }
+      track('a[href="#app"]','cta_open_upscaler');
+      track('a[href="#pricing"]','cta_view_pricing');
+      track('#pay .btn','cta_buy_pro');
+      track('#pay-studio .btn','cta_buy_studio');
+    })();
+  </script>
 </body>
 </html>
-
-
-
-
-
-
-
-
-
 
 
 
