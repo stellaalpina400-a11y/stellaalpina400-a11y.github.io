@@ -327,24 +327,45 @@
       </div>
     </section>
 
-    <!-- EMBED APP -->
-    <section id="app" class="embed"><div class="app-chrome">
-        <div class="left">
-          <span class="traffic-dots" aria-hidden="true"><i></i><i></i><i></i></span>
-          <strong class="muted" style="letter-spacing:.2px">Pixweave App</strong>
-          <span class="status"><span class="dot"></span><span class="label">Warming up…</span></span>
-        </div>
+   <!-- EMBED APP -->
+<section id="app" class="embed">
+  <div class="app-chrome">
+    <div class="left">
+      <span class="traffic-dots" aria-hidden="true"><i></i><i></i><i></i></span>
+      <strong class="muted" style="letter-spacing:.2px">Pixweave App</strong>
+      <span class="status"><span class="dot"></span><span class="label">Online</span></span>
+    </div>
+  </div>
+  <div class="frame-wrap">
+    <div class="frame">
+      <iframe id="app-frame" src="https://serghejl-pixellift.hf.space/?v=11" loading="lazy" allow="clipboard-read; clipboard-write; camera; microphone;"></iframe>
+      <div id="app-loader" class="iframe-loader">
+        <div class="spinner"></div>
+        <div class="loader-text">Loading the app… usually just a few seconds.</div>
       </div>
-      <div class="frame-wrap">
-        <div class="frame">
-          <iframe id="app-frame" src="https://serghejl-pixellift.hf.space/?v=11" loading="lazy" allow="clipboard-read; clipboard-write; camera; microphone;"></iframe>
-          <div id="app-loader" class="iframe-loader">
-            <div class="spinner"></div>
-            <div class="loader-text">First launch may take 10–60s — the Space is waking up.</div>
-          </div>
-        </div>
-      </div>
-    </section>
+    </div>
+  </div>
+</section>
+
+<script>
+  (function () {
+    var frame = document.getElementById('app-frame');
+    var loader = document.getElementById('app-loader');
+    var statusLabel = document.querySelector('#app .status .label');
+
+    function ready() {
+      if (loader) loader.style.display = 'none';
+      if (statusLabel) statusLabel.textContent = 'Ready';
+    }
+
+    if (frame) {
+      // Скрываем лоадер, когда iframe загрузился
+      frame.addEventListener('load', ready, { once: true });
+      // Подстраховка: даже если событие не сработает, уберём лоадер через пару секунд
+      setTimeout(ready, 6000);
+    }
+  })();
+</script>
 
     <!-- GALLERY -->
     <section style="margin-top:28px"><div class="grid">
